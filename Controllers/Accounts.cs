@@ -112,7 +112,7 @@ namespace INF2course.Controllers
                 Response.Redirect("/profile.html");
                 return true;
             }
-
+            Response.Redirect("/auth.html");
             return false;
         }
 
