@@ -35,21 +35,3 @@ namespace INF2course
         }
     }
 }
-//ORM
-//string str= @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SteamDB;Integrated Security=True";
-//MyORM myORM= new MyORM(str);
-//var result = new MyORM(str).ExecuteScalar<Account>("select Id,Login,Password from [dbo].[Table]");
-//var result = new MyORM(str)
-//    .AddParameter<string>("@Login", "SomeTea")
-//   .AddParameter<string>("@Password", "TeaPassword").ExecuteNonQuery("insert into [dbo].[Table] (Login,Password) values(@Login,@Password)");
-//var result2 = new MyORM(str).ExecuteQuery<int>("insert into [dbo].[Table] (Login,Password) values('SomeTea','TeaPassword')");
-//var result3 = new MyORM(str).Select<Account>();
-//foreach(var e in result3)
-//{
-//    e.Show();
-//}
-//new MyORM(str).Insert<AccountInfo>(new AccountInfo(5,"testLogin","testPassword"));
-
-//DAO
-//DAOAccount Dao = new DAOAccount();
-//Dao.Delete(new AccountInfo(1010, "SomeTea", "TeaPassword"));

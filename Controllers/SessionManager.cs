@@ -54,6 +54,14 @@ namespace INF2course.Controllers
             }
 
             return session;
-        } 
+        }
+
+        internal static void Delete(Guid sessionId)
+        {
+            if (MemoryCache.ContainsKey(sessionId))
+            {
+                MemoryCache.Remove(sessionId);
+            }
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace INF2course.Controllers
 
         public void Show()
         {
-            Console.WriteLine("Id: "+Id+";Login: "+Login+";Password: "+Password);
+            Console.WriteLine("Id: "+Id+";Login: "+Login +";Password: "+Password);
         }
     }
 }

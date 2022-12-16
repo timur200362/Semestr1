@@ -122,26 +122,6 @@ namespace INF2course
                 _cmd.ExecuteNonQuery();
             
         }
-        //public void Update<T>(T model)
-        //{
-        //    using (_connection)
-        //    {
-        //        PropertyInfo[] modelFields = model.GetType().GetProperties().Where(p => p.Name.Equals("Id")).ToArray();
-        //        List<string> parameters = modelFields.Select(x => $"@{x.Name}").ToList();
-        //        var collection = from p in modelFields where p.Name!="Id" select p;
-        //        string sqlExpression = $"UPDATE [dbo].[Table] SET {string.Join(",", collection.Select(f => $"{f.Name}=@{f.Name}").ToList())} WHERE Id=" + modelFields[0].GetValue(model);
-        //        _cmd.CommandText = sqlExpression;
-        //        Console.WriteLine(sqlExpression);
-        //        foreach (var field in modelFields)
-        //        {
-        //            _cmd.Parameters.Add(new SqlParameter($"@{field.Name}", field.GetValue(model)));
-        //        }
-
-        //        _connection.Open();
-        //        _cmd.ExecuteNonQuery();
-        //    }
-        //}
-
         protected string GetTableName(Type t)
         {
             string tableName = t.Name;

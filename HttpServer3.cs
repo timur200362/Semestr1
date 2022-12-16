@@ -116,10 +116,6 @@ namespace INF2course
                 buffer = Encoding.UTF8.GetBytes(err);
             }
             
-            foreach (Cookie cookie in request.Cookies)
-            {
-                response.Cookies.Add(cookie);
-            }
             Stream output = response.OutputStream;
             output.Write(buffer, 0, buffer.Length);
             output.Close();

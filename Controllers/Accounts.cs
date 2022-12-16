@@ -26,8 +26,8 @@ namespace INF2course.Controllers
             //return dAO.GetById(id);
 
             AccountInfo account = null;
-            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SteamDB;Integrated Security=True";
-            string sqlExpression = "select * from [dbo].[Table]";
+            string connectionString = @"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = RestaurantDB; Integrated Security = True";
+            string sqlExpression = "select * from [dbo].[Accounts]";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -63,37 +63,10 @@ namespace INF2course.Controllers
                 return null;
             }
             return dAO.GetAll();
-            //List<AccountInfo> accounts = new List<AccountInfo>();
-            //string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SteamDB;Integrated Security=True";
-
-            //string sqlExpression = "select * from [dbo].[Table]";
-            //using (var connection = new SqlConnection(connectionString))
-            //{
-            //    connection.Open();
-            //    SqlCommand command = new SqlCommand(sqlExpression, connection);
-            //    SqlDataReader reader = command.ExecuteReader();
-
-            //    //если есть данные 
-            //    if (reader.HasRows)
-            //    {
-
-            //        //Построчно считываем данные
-            //        while (reader.Read())
-            //        {
-            //            accounts.Add(new AccountInfo
-            //            (reader.GetInt32(0),
-            //             reader.GetString(1),
-            //             reader.GetString(2))
-            //                    );
-            //        }
-            //    }
-            //    reader.Close();
-            //}
-            //return accounts;
         }
 
         [HttpPOST("saveaccount")]
-        public bool SaveAccount(string login = "test", string password = "test")
+        public bool SaveAccount(string login, string password)
         {
             
             AccountInfo existingAccount = dAO.GetByColumnValue("login", login);
@@ -112,15 +85,31 @@ namespace INF2course.Controllers
             return false;
         }
 
+        [HttpGET("logout")]
+        public void Logout()
+        {
+            var cookie = Request.Cookies.FirstOrDefault(x => x.Name == "SessionId");
+            if (cookie != null)
+            {
+                Guid sessionId = System.Text.Json.JsonSerializer.Deserialize<Guid>(cookie.Value);
+                Request.Cookies.Remove(cookie);
+                Response.Cookies.Add(new Cookie() { Name = "SessionId", Expires = DateTime.Now.AddDays(-1), Path= "/" });
+                SessionManager.Delete(sessionId);
+            }
+           
+            Response.Redirect("/");
+        }
+
         [HttpPOST("login")]
         public bool Login(string login, string password)
         {
             AccountInfo existingAccount = dAO.GetByColumnValue("login", login);
             if (existingAccount != null && existingAccount.Password == password)
             {
-                Session session = SessionManager.Create(existingAccount.Id, "user@gmail.com");
+                Session session = SessionManager.Create(existingAccount.Id, existingAccount.Login);
                 string cookie = System.Text.Json.JsonSerializer.Serialize(session.Id);
                 Response.Cookies.Add(new Cookie("SessionId", cookie,path:"/"));
+                Response.Redirect("/profile.html");
                 return true;
             }
 
@@ -158,29 +147,5 @@ namespace INF2course.Controllers
             AccountInfo existingAccount = dAO.GetByColumnValue("id", currentAuth.UserId);            
             return existingAccount;
         }
-
-        /* public static async void SaveAccount(string login = "test3", string password = "test3")
-         {
-            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SteamDB;Integrated Security=True";
-
-             // выражение SQL для добавления данных
-             string sqlExpression = "INSERT INTO [dbo].[Table] (Login, Password) VALUES (@login, @password)";
-
-             using (SqlConnection connection = new SqlConnection(connectionString))
-             {
-                 await connection.OpenAsync();
-                 SqlCommand command = new SqlCommand(sqlExpression, connection);
-                 // создаем параметр для логина
-                 SqlParameter loginParam = new SqlParameter("@login", login);
-                 // добавляем параметр к команде
-                 command.Parameters.Add(loginParam);
-                 // создаем параметр для пароля
-                 SqlParameter passwordParam = new SqlParameter("@password", password);
-                 // добавляем параметр к команде
-                 command.Parameters.Add(passwordParam);
-                 // записываем строку в бд
-                 await command.ExecuteNonQueryAsync();
-             }
-         }*/
     }
 }

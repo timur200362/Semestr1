@@ -9,7 +9,7 @@ namespace INF2course.DAO
 {
     internal class DAOAccount: IDAO<AccountInfo>
     {
-        const string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=SteamDB;Integrated Security=True";
+        const string connectionString = @"Data Source = (localdb)\MSSQLLocalDB;Initial Catalog = RestaurantDB; Integrated Security = True";
         MyORM MyORM = new MyORM(connectionString);
         public void Insert(AccountInfo model)
         {
