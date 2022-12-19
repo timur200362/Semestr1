@@ -19,7 +19,6 @@ namespace INF2course.Controllers
             Password = password;
         }
         public AccountInfo() { }
-
         public void Show()
         {
             Console.WriteLine("Id: "+Id+";Login: "+Login +";Password: "+Password);

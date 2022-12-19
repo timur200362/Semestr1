@@ -64,15 +64,14 @@ namespace INF2course.Controllers
             }
             return dAO.GetAll();
         }
-
         [HttpPOST("saveaccount")]
         public bool SaveAccount(string login, string password)
         {
-            
+
             AccountInfo existingAccount = dAO.GetByColumnValue("login", login);
             if (existingAccount != null)
             {
-                return true;
+                Response.Redirect("/reg.html");
             }
 
             AccountInfo accountInfo = new AccountInfo
@@ -81,8 +80,24 @@ namespace INF2course.Controllers
                 Password = password
             };
             dAO.Insert(accountInfo);
+            Response.Redirect("/profile.html");
+            return true;
+        }
 
-            return false;
+        [HttpGET("saveage")]
+        public void SaveAge(int age)
+        {
+            var cookie = Request.Cookies.FirstOrDefault(x => x.Name == "SessionId");
+            if (cookie != null)
+            {
+                Guid sessionId = System.Text.Json.JsonSerializer.Deserialize<Guid>(cookie.Value);
+                var session = SessionManager.GetById(sessionId);
+                if (session == null)
+                {
+                    return;
+                }
+                dAO.SaveAge(session.AccountId, age);
+            }
         }
 
         [HttpGET("logout")]
@@ -108,7 +123,7 @@ namespace INF2course.Controllers
             {
                 Session session = SessionManager.Create(existingAccount.Id, existingAccount.Login);
                 string cookie = System.Text.Json.JsonSerializer.Serialize(session.Id);
-                Response.Cookies.Add(new Cookie("SessionId", cookie,path:"/"));
+                Response.Cookies.Add(new Cookie("SessionId", cookie, path: "/"));
                 Response.Redirect("/profile.html");
                 return true;
             }
@@ -147,5 +162,20 @@ namespace INF2course.Controllers
             AccountInfo existingAccount = dAO.GetByColumnValue("id", currentAuth.UserId);            
             return existingAccount;
         }
+
+        //[HttpPOST("saveadata")]
+        //public bool SaveData(int age, string adress, string name, string phonenum)
+        //{
+        //    AccountInfo existingAccount = dAO.GetByColumnValue("phonenum", phonenum);
+        //    AccountInfo accountInfo = new AccountInfo
+        //    {
+        //        Age = age,
+        //        Adress = adress,
+        //        Name = name,
+        //        PhoneNum= phonenum,
+        //    };
+        //    dAO.Insert(accountInfo);
+        //    return true;
+        //}
     }
 }

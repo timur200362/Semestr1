@@ -1,6 +1,8 @@
 ﻿using INF2course.Controllers;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +33,13 @@ namespace INF2course.DAO
         public AccountInfo GetByColumnValue(string column, object value)
         {
             return MyORM.AddParameter("@columnValue", value).ExecuteQuery<AccountInfo>($"SELECT * FROM [dbo].[Accounts] WHERE {column} = @columnValue").FirstOrDefault();
+        }
+
+        internal void SaveAge(int accountId, int age)
+        {
+            MyORM.AddParameter("@accountId", accountId).AddParameter("@age", age).ExecuteNonQuery
+                ($"UPDATE  [dbo].[Accounts] SET Age = @age WHERE Id = @accountId");
+
         }
     }
 }
