@@ -41,5 +41,23 @@ namespace INF2course.DAO
                 ($"UPDATE  [dbo].[Accounts] SET Age = @age WHERE Id = @accountId");
 
         }
+        internal void SaveAdress(int accountId, string city)
+        {
+            MyORM.AddParameter("@accountId", accountId).AddParameter("@city", city).ExecuteNonQuery
+                ($"UPDATE  [dbo].[Accounts] SET City = @city WHERE Id = @accountId");
+
+        }
+        internal void SaveName(int accountId, string name)
+        {
+            MyORM.AddParameter("@accountId", accountId).AddParameter("@name", name).ExecuteNonQuery
+                ($"UPDATE  [dbo].[Accounts] SET Name = @name WHERE Id = @accountId");
+
+        }
+        internal void SaveNumPhone(int accountId, string numphone)
+        {
+            MyORM.AddParameter("@accountId", accountId).AddParameter("@numphone", numphone).ExecuteNonQuery
+                ($"UPDATE  [dbo].[Accounts] SET NumPhone = @numphone WHERE Id = @accountId");
+
+        }
     }
 }

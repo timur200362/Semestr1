@@ -84,22 +84,6 @@ namespace INF2course.Controllers
             return true;
         }
 
-        [HttpGET("saveage")]
-        public void SaveAge(int age)
-        {
-            var cookie = Request.Cookies.FirstOrDefault(x => x.Name == "SessionId");
-            if (cookie != null)
-            {
-                Guid sessionId = System.Text.Json.JsonSerializer.Deserialize<Guid>(cookie.Value);
-                var session = SessionManager.GetById(sessionId);
-                if (session == null)
-                {
-                    return;
-                }
-                dAO.SaveAge(session.AccountId, age);
-            }
-        }
-
         [HttpGET("logout")]
         public void Logout()
         {
@@ -163,19 +147,67 @@ namespace INF2course.Controllers
             return existingAccount;
         }
 
-        //[HttpPOST("saveadata")]
-        //public bool SaveData(int age, string adress, string name, string phonenum)
-        //{
-        //    AccountInfo existingAccount = dAO.GetByColumnValue("phonenum", phonenum);
-        //    AccountInfo accountInfo = new AccountInfo
-        //    {
-        //        Age = age,
-        //        Adress = adress,
-        //        Name = name,
-        //        PhoneNum= phonenum,
-        //    };
-        //    dAO.Insert(accountInfo);
-        //    return true;
-        //}
+        [HttpGET("saveage")]
+        public void SaveAge(int age)
+        {
+            var cookie = Request.Cookies.FirstOrDefault(x => x.Name == "SessionId");
+            if (cookie != null)
+            {
+                Guid sessionId = System.Text.Json.JsonSerializer.Deserialize<Guid>(cookie.Value);
+                var session = SessionManager.GetById(sessionId);
+                if (session == null)
+                {
+                    return;
+                }
+                dAO.SaveAge(session.AccountId, age);
+            }
+        }
+
+        [HttpGET("savecity")]
+        public void SaveAdress(string city)
+        {
+            var cookie = Request.Cookies.FirstOrDefault(x => x.Name == "SessionId");
+            if (cookie != null)
+            {
+                Guid sessionId = System.Text.Json.JsonSerializer.Deserialize<Guid>(cookie.Value);
+                var session = SessionManager.GetById(sessionId);
+                if (session == null)
+                {
+                    return;
+                }
+                dAO.SaveAdress(session.AccountId, city);
+            }
+        }
+
+        [HttpGET("savename")]
+        public void SaveName(string name)
+        {
+            var cookie = Request.Cookies.FirstOrDefault(x => x.Name == "SessionId");
+            if (cookie != null)
+            {
+                Guid sessionId = System.Text.Json.JsonSerializer.Deserialize<Guid>(cookie.Value);
+                var session = SessionManager.GetById(sessionId);
+                if (session == null)
+                {
+                    return;
+                }
+                dAO.SaveName(session.AccountId, name);
+            }
+        }
+        [HttpGET("savenumphone")]
+        public void SaveNumPhone(string numphone)
+        {
+            var cookie = Request.Cookies.FirstOrDefault(x => x.Name == "SessionId");
+            if (cookie != null)
+            {
+                Guid sessionId = System.Text.Json.JsonSerializer.Deserialize<Guid>(cookie.Value);
+                var session = SessionManager.GetById(sessionId);
+                if (session == null)
+                {
+                    return;
+                }
+                dAO.SaveNumPhone(session.AccountId, numphone);
+            }
+        }
     }
 }
