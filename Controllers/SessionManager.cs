@@ -30,7 +30,7 @@ namespace INF2course.Controllers
                 return false;
             }
             Session session = MemoryCache[sessionId];
-            bool result = session.CreateDateTime.AddMinutes(2) > DateTime.Now;
+            bool result = session.CreateDateTime.AddMinutes(1440) > DateTime.Now;
             if (result == false)
             {
                 MemoryCache.Remove(sessionId);
@@ -46,7 +46,7 @@ namespace INF2course.Controllers
                 return null;
             }
             Session session = MemoryCache[sessionId];
-            bool result = session.CreateDateTime.AddMinutes(2) > DateTime.Now;
+            bool result = session.CreateDateTime.AddMinutes(1440) > DateTime.Now;
             if (result == false)
             {
                 MemoryCache.Remove(sessionId);

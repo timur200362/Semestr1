@@ -1,11 +1,6 @@
 ﻿using INF2course.Controllers;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace INF2course.DAO
 {

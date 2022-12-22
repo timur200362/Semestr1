@@ -27,7 +27,7 @@ namespace INF2course
             switch (command)
             {
                 case "stop": server.Stop(); break;
-                case "restart": server.Start(); server.Stop(); break;
+                case "restart": server.Stop(); server.Start(); break;
                 case "start": server.Start(); break;
                 case "status": Console.WriteLine(server.Status.ToString()); break;
                 case "exit": _appIsRunning = false; break;
