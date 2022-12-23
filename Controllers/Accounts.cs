@@ -37,7 +37,7 @@ namespace INF2course.Controllers
             AccountInfo accountInfo = new AccountInfo
             {
                 Login = login,
-                Password = password
+                Password = MD5Hash.HashPassword(password)
             };
             dAO.Insert(accountInfo);
             Response.Redirect("/profile.html");
