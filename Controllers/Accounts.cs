@@ -107,7 +107,8 @@ namespace INF2course.Controllers
             AccountInfo existingAccount = dAO.GetByColumnValue("id", currentAuth.UserId);
             //Razor
             string str = "@Model.answer";
-            string template = RazorGenerator<object>.Run("get_users", str, new { answer = "lol" });
+            string template = RazorGenerator<object>.Run("get_users", str, 
+                new { answer = $"Id: {existingAccount.Id}, Login: {existingAccount.Login}, Password: {existingAccount.Password}"} );
 
             return template;
         }
