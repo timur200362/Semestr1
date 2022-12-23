@@ -142,7 +142,7 @@
             var re = new RegExp(regexp);
             return this.optional(element) || re.test(value);
           },
-          "Пароль не отвечает требованиям безопасности - 4 символа, латинские символы"
+          "Пароль не отвечает требованиям безопасности - латинские символы, цифры до 100 шт."
         );
 
         $.validator.addMethod(
@@ -156,7 +156,7 @@
           "Введите email"
         );
 
-        $("#password").rules("add", { password: "^[a-zA-Z'.\\s]{4,40}$" });
+        $("#password").rules("add", { password: "^[a-zA-Z0-9'.\\s]{100,40}$" });
         $("#password").rules("add", { password_notempty: 1 });
         $("#login").rules("add", { email_notempty: 1 });
 
